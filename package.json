@@ -1,0 +1,57 @@
+{
+  "name": "@typestyled/tools",
+  "version": "0.0.0",
+  "description": "Tools for generating and manipulating CSS properties.",
+  "main": "./lib/index.js",
+  "typings": "./lib/index",
+  "types": "./lib/index",
+  "module": "./lib.es2015/index.js",
+  "jsnext:main": "./lib.es2015/index.js",
+  "repository": "git@github.com:typestyled/core.git",
+  "keywords": [
+    "typestyle",
+    "CSS",
+    "tools"
+  ],
+  "author": "Frederik Krautwald <fkrautwald@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/typestyled/core/issues"
+  },
+  "homepage": "https://github.com/typestyled/core#readme",
+  "scripts": {
+    "build": "yarn clean && yarn build:commonjs && yarn build:es2015",
+    "build:es2015": "tsc -p tsconfig.es2015.json",
+    "build:commonjs": "tsc -p .",
+    "clean": "rimraf ./lib*",
+    "lint": "yarn lint:import && yarn lint:prettier",
+    "lint:import": "./node_modules/.bin/import-sort --overwrite 'src/' || true",
+    "lint:prettier": "./node_modules/.bin/prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote --trailing-comma es5 --parser typescript 'src/**/*.ts'",
+    "postversion": "git push --follow-tags && npm publish --access=public",
+    "precommit": "lint-staged",
+    "preversion": "yarn test",
+    "release:major": "npm version major -m 'Release major v%s'",
+    "release:minor": "npm version minor -m 'Release minor v%s'",
+    "test": "yarn test:lint && yarn test:unit",
+    "test:lint": "yarn lint:prettier",
+    "test:unit": "./node_modules/.bin/typed-test 'src/*.test.ts' 'src/**/*.test.ts'",
+    "version": "yarn build"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "lint",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@typed/test": "4.0.0",
+    "husky": "0.14.3",
+    "import-sort-cli": "3.3.0",
+    "import-sort-parser-typescript": "3.2.0",
+    "import-sort-style-eslint": "3.0.0",
+    "lint-staged": "4.3.0",
+    "prettier": "1.7.4",
+    "rimraf": "2.6.2",
+    "typescript": "2.5.3"
+  }
+}
